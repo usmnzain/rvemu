@@ -1,6 +1,9 @@
 #include "../includes/core.h"
 #include "../includes/bus.h"
 #include "../includes/opcodes.h"
+#include "../includes/alu_ops.h"
+
+uint32_t regs[32];
 
 uint32_t fetch(uint64_t addr) {
     uint32_t inst = bus_load(addr, 32);
@@ -23,8 +26,7 @@ int execute(uint32_t inst){
                 case ADD_SUB:
                     switch(f7)
                     {
-                        case ADD:
-                            rd = rs1 + rs2;
+                        case ADD: op_add(rs1, rs2, rd, regs);
                             break;
                         case SUB:
                             rd = rs1 - rs2;
